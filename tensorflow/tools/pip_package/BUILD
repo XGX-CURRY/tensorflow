@@ -27,6 +27,7 @@ transitive_hdrs(
     deps = [
         "//tensorflow/compiler/tf2xla:xla_compiled_cpu_function",
         "//tensorflow/compiler/mlir:mlir_graph_optimization_pass",
+        "//tensorflow/compiler/mlir:passes",
         "//tensorflow/core:core_cpu",
         "//tensorflow/core:framework",
         "//tensorflow/core:lib",
