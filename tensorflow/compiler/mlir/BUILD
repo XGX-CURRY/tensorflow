@@ -196,16 +196,23 @@ cc_library(
     alwayslink = 1,
 )
 
-tf_cc_binary(
-    name = "tf-opt",
+cc_library(
+    name = "tf_opt_lib",
     deps = [
         ":passes",
-        ":tf_mlir_opt_main",
         "//tensorflow/compiler/mlir/tensorflow:mlir_roundtrip_pass_registration",
         "//tensorflow/compiler/mlir/tensorflow:tensorflow_test_passes",
         "//tensorflow/compiler/mlir/tensorflow:tf_graph_optimization_pass",
         "//tensorflow/compiler/mlir/xla:all_xla_passes_for_testing",
     ],
+)
+
+tf_cc_binary(
+    name = "tf-opt",
+    deps = [
+        ":tf_opt_lib",
+        ":tf_mlir_opt_main",
+    ]
 )
 
 tf_cc_binary(
