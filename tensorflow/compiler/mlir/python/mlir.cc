@@ -34,6 +34,7 @@ limitations under the License.
 #include "tensorflow/c/eager/tfe_context_internal.h"
 #include "tensorflow/c/tf_status.h"
 #include "tensorflow/c/tf_status_helper.h"
+#include "tensorflow/compiler/mlir/hlo/include/mlir-hlo/Dialect/mhlo/transforms/register_passes.h"
 #include "tensorflow/compiler/mlir/tensorflow/dialect_registration.h"
 #include "tensorflow/compiler/mlir/tensorflow/transforms/passes.h"
 #include "tensorflow/compiler/mlir/tensorflow/transforms/tf_saved_model_passes.h"
@@ -65,6 +66,9 @@ std::string RunPassPipelineOnModule(mlir::ModuleOp module,
                                     const std::string &pass_pipeline,
                                     bool show_debug_info, TF_Status *status) {
   if (!pass_pipeline.empty()) {
+    mlir::registerTensorFlowPasses();
+    mlir::mhlo::registerAllMhloPasses();
+
     mlir::PassManager pm(module.getContext());
     std::string error;
     llvm::raw_string_ostream error_stream(error);
